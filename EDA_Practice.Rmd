@@ -1,0 +1,74 @@
+---
+title: "EDA Practice"
+author: "Noah Johnson"
+date: "February 27, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(install.load)
+
+install_load("tidyverse")
+```
+
+## Setup
+There are two possible data sets for this activity. Both of them deal with pollution. Consider:
+
++ How can you initially explore and visualize the data?
++ What question(s) is/are of interest? Who is the target audience?
++ Can you validate or check the structure of the data?
++ What comparisons can be shown and how can we show them?
++ What explanations or mechanisms would be of interest for this data? What external data might we need in order to help us visualize these properties?
++ What multivariate relationships are most of interest and how can we show them?
++ What non-graphical evidence might we want to include? How can we best describe and document this evidence?
+
+## Data set 1
+Go to Roger Peng’s website to download a zip file for this data.
+
+About the data:
+
++ city: Chicago (can find similar data for other cities)
++ tmpd: Temperature in degrees Fahrenheit
++ dptp: Dewpoint
++ date: the date of the measurement
++ pm10tmean2: mean particles in 2.5-10 mg per cubic meter
++ pm25tmean2: mean particles < 2.5 mg per cubic meter (more dangerous)
++ o3tmean2: Ozone in parts per billion
++ no2tmean2: Nitrogen dioxide in parts per billion
+
+```{r}
+pollution <- readRDS("chicago.rds")
+str(pollution)
+```
+
+### Scatterplot visualization
+
+```{r}
+pollution$city <- factor(pollution$city) #convert 
+plot(pollution)
+```
+
+
+## Data set 2
+“The data we will be using come from the U.S. Environmental Protection Agency (EPA), which is the U.S. government agency that sets national air quality standards for outdoor air pollution.”
+
+“One of the national ambient air quality standards in the U.S. concerns the long-term average level of fine particle pollution, also referred to as PM2.5. Here, the standard says that the “annual mean, averaged over 3 years” cannot exceed 12 micrograms per cubic meter. Data on daily PM2.5 are available from the U.S. EPA web site, or specifically, the EPA Air Quality System web site.”
+
+“One key question we are interested is: Are there any counties in the U.S. that exceed the national standard for fine particle pollution? This question has important consequences because counties that are found to be in violation of the national standards can face serious legal consequences.”
+
+```{r}
+pollution <- read.csv("2018_avgpm25.csv")
+str(pollution)
+
+
+```
+
+### Scatterplot visualization
+
+```{r}
+pollution$Date <- as.Date(pollution$Date, format = "%m/%d/%Y")
+
+plot(pollution)
+```
